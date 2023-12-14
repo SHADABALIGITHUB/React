@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+// import { preview } from 'vite';
 
 const First = () => {
 
@@ -6,6 +7,7 @@ const First = () => {
     const [hour, setHour] = useState(0);
     const [minute, setMinute] = useState(0);
     const [second, setSecond] = useState(0);
+    const [milisecond,setmilisecond]=useState(0);
     const [check, setCheck] = useState(false);
   
     useEffect(() => {
@@ -14,6 +16,12 @@ const First = () => {
       if (check) {
         timerId = setTimeout(() => {
           start();
+
+          if(milisecond===16){
+            setmilisecond(0);
+            setSecond((prevSecond)=> prevSecond+1);
+
+          }
   
           if (second === 59) {
             setSecond(0);
@@ -29,18 +37,18 @@ const First = () => {
             setHour(0);
             setDay((prevDay) => prevDay + 1);
           }
-        }, 1000);
+        }, 62.5);
       }
   
       // Cleanup function to clear the timeout when the component is unmounted or when check becomes false
       return () => {
         clearTimeout(timerId);
       };
-    }, [check, second, minute, hour, day]);
+    }, [check,milisecond, second, minute, hour, day]);
   
     const start = () => {
       setCheck(true);
-      setSecond((prevSecond) => prevSecond + 1);
+      setmilisecond((prevSecond) => prevSecond + 1);
     };
   
     const stop = () => {
@@ -48,6 +56,7 @@ const First = () => {
     };
 
     const reset=()=>{
+        setmilisecond(0);
         setSecond(0);
         setMinute(0);
         setHour(0);
@@ -59,10 +68,10 @@ const First = () => {
         <div className='m-0 p-0 flex w-full h-screen justify-center items-center flex-col' >
 
                <h2 className='text-3xl border-x-stone-800 border-solid border-2  rounded-2xl p-4 m-4'>Stopwatch  </h2> 
-               
+
                 <div className='w-1/2 h-1/2 flex justify-center items-end'>
 
-                        <div className='w-32  h-32 border-8 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
+                        <div className='w-32 h-32 p-12 border-8 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
 
                                <h2 className="text-8xl text-white" >{day}</h2>
 
@@ -70,26 +79,35 @@ const First = () => {
 
                         <h2>Day</h2>
 
-                        <div className='w-32 h-32 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
+                        <div className='w-32 h-32 p-16 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
 
                              <h2 className="text-8xl text-white" >{hour}</h2>
 
                         </div>
                         <h2>Hours</h2>
                        
-                        <div className='w-32 h-32 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
+                        <div className='w-32 h-32  p-16 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
 
                         <h2 className="text-8xl text-white" >{minute}</h2>
 
                         </div>
                         <h2>Minutes</h2>
                         
-                        <div className='w-32 h-32 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
+                        <div className='w-32 h-32 p-16 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
 
                         <h2 className="text-8xl text-white" >{second}</h2>
   
                         </div>
                         <h2>Seconds</h2>
+                        <div className='w-32 h-32 p-16 border-2 bg-black border-black border-solid  rounded-full flex  justify-center items-center'>
+
+                        <h2 className="text-8xl text-white" >{milisecond}</h2>
+
+                         </div>
+
+                         <h2>miniSeconds</h2>
+    
+
                        
 
 
@@ -113,7 +131,7 @@ const First = () => {
                       Reset
                      </button>
                     
-
+  
                        
 
                 </div>
